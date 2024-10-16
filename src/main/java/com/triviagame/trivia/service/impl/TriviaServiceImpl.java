@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +32,17 @@ public class TriviaServiceImpl implements TriviaService {
         Map<String, Object> triviaData = results.get(0);
 
         Trivia trivia = new Trivia();
-        trivia.setCorrectAnswer((String) triviaData.get("question"));
+        trivia.setQuestion((String) triviaData.get("question"));
         trivia.setCorrectAnswer((String) triviaData.get("correct_answer"));
+
+        List<String> incorrectAnswers = (List<String>) triviaData.get("incorrect_answers");
+
+        List<String> possibleAnswers = new ArrayList<>(incorrectAnswers);
+        possibleAnswers.add(trivia.getCorrectAnswer());
+
+        Collections.shuffle(possibleAnswers);
+
+        trivia.setPossibleAnswers(possibleAnswers);
 
         return triviaRepository.save(trivia);
     }

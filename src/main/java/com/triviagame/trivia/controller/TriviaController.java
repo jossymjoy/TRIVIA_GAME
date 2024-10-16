@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +29,10 @@ public class TriviaController {
     public ResponseEntity<Map<String, Object>> startTrivia() {
         Trivia trivia = triviaService.startTrivia();
 
-        List<String> possibleAnswers = new ArrayList<>();
-        possibleAnswers.add(trivia.getCorrectAnswer());
-
         Map<String, Object> response = new HashMap<>();
         response.put("triviaId", trivia.getTriviaId());
         response.put("question", trivia.getQuestion());
-        response.put("possibleAnswers", possibleAnswers);
+        response.put("possibleAnswers", trivia.getPossibleAnswers());
 
         return ResponseEntity.ok(response);
     }

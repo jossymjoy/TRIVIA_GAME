@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+
+import java.util.List;
 
 @Entity
 public class Trivia {
@@ -18,6 +21,9 @@ public class Trivia {
 
     private int answerAttempts = 0;
 
+    @Transient
+    private List<String> possibleAnswers;
+
     public Long getTriviaId() { return triviaId; }
     public void setTriviaId(Long triviaId) { this.triviaId = triviaId; }
 
@@ -29,5 +35,8 @@ public class Trivia {
 
     public int getAnswerAttempts() { return answerAttempts; }
     public void setAnswerAttempts(int answerAttempts) { this.answerAttempts = answerAttempts; }
+
+    public List<String> getPossibleAnswers() { return possibleAnswers; }
+    public void setPossibleAnswers(List<String> possibleAnswers) { this.possibleAnswers = possibleAnswers; }
 
 }
